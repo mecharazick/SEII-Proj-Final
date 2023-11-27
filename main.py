@@ -16,6 +16,12 @@ app = Flask(__name__)
 def index():
     return render_template('index.html') #you can customze index.html here
 
+@app.route('/command', methods=['POST'])
+def command():
+    if request.method == 'POST':
+        print(request.get_json()['command'])
+    return '<h1>POSTADO</h1>'
+
 def gen(camera):
     #get camera frame
     while True:
@@ -28,12 +34,5 @@ def video_feed():
     return Response(gen(pi_camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-# Take a photo when pressing camera button
-@app.route('/picture')
-def take_picture():
-    pi_camera.take_picture()
-    return "None"
-
 if __name__ == '__main__':
-
     app.run(host='0.0.0.0', debug=False)
