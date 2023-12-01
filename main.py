@@ -3,14 +3,22 @@
 #Desc: This web application serves a motion JPEG stream
 # main.py
 # import the necessary packages
-from flask import Flask, render_template, Response, request, send_from_directory
+from flask import Flask, render_template, Response, request
 from camera import VideoCamera
+from motor import Motor
+import threading
 import os
 
 pi_camera = VideoCamera(flip=False) # flip pi camera if upside down.
 
 # App Globals (do not edit)
 app = Flask(__name__)
+
+def sendCommandToMotor(command):
+    mot = Motor()
+    mot.issueCommand(command)
+    return
+
 
 @app.route('/')
 def index():
@@ -19,8 +27,9 @@ def index():
 @app.route('/command', methods=['POST'])
 def command():
     if request.method == 'POST':
-        print(request.get_json()['command'])
-    return '<h1>POSTADO</h1>'
+        command = request.get_json()['command']
+        threading.Thread(target=sendCommandToMotor, args=[command])
+    return '<h1>Comando Enviado</h1>'
 
 def gen(camera):
     #get camera frame

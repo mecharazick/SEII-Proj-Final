@@ -14,8 +14,8 @@ const BASEURL = "http://127.0.0.1:5000";
     };
   }
   const buttons = [];
-  for (i = 0; i < 4; i++) {
-    const buttonId = `${BUTTONPREFIX}-${["left", "up", "down", "right"][i]}`;
+  for (i = 0; i < 5; i++) {
+    const buttonId = `${BUTTONPREFIX}-${["left", "forward", "back", "right", "stop"][i]}`;
     const buttonEl = document.querySelector(buttonId);
     const buttonHandler = (e) => {
       e.preventDefault();
