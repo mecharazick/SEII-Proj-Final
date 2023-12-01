@@ -4,6 +4,7 @@
 # main.py
 # import the necessary packages
 from flask import Flask, render_template, Response, request
+from flask_cors import CORS
 from camera import VideoCamera
 from motor import Motor
 import threading
@@ -13,6 +14,7 @@ pi_camera = VideoCamera(flip=False) # flip pi camera if upside down.
 
 # App Globals (do not edit)
 app = Flask(__name__)
+CORS(app)
 
 def sendCommandToMotor(command):
     mot = Motor()
