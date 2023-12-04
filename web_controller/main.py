@@ -8,6 +8,7 @@ from flask_cors import CORS
 # from camera import VideoCamera
 from motor import Motor
 import threading
+import time
 import os
 
 pi_camera = VideoCamera(flip=False) # flip pi camera if upside down.
@@ -34,9 +35,13 @@ def command():
     return '<h1>Comando Enviado</h1>'
 
 def gen(camera):
+    lastFrameSentTime = time.time()
     #get camera frame
     while True:
+        if(time.time() < lastFrameSentTime + 2.0):
+            continue
         frame = camera.get_frame()
+        lastFrameSentTime = time.time()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
