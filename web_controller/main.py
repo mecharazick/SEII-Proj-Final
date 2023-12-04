@@ -5,7 +5,7 @@
 # import the necessary packages
 from flask import Flask, render_template, Response, request
 from flask_cors import CORS
-from camera import VideoCamera
+# from camera import VideoCamera
 from motor import Motor
 import threading
 import os
